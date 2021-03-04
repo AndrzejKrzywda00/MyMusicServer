@@ -7,4 +7,6 @@ public class MyMusicApplication {
     Server will have many objcets of this type running
      */
 
+    User user
+
 }

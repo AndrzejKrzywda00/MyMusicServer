@@ -44,24 +44,25 @@ public class AppServer {
 
     // these are connected apps at the moment
     // these are pairs -> uniqueID : MyMusicApplication
-    private final Map<String,MyMusicApplication> applicationList = new HashMap<String,MyMusicApplication>();
+    private final Map<String, MyMusicApplication> applicationList = new HashMap<String, MyMusicApplication>();
 
     // these are users at the moment
     // this list is connected with applicationList
     // the one's id is the same as user id
-    private final Map<String,User> users = new HashMap<String,User>();
+    private final Map<String, User> users = new HashMap<String,User>();
 
     public AppServer() {
 
-        // passing configuration
+        // passing configuration to the webServer
         ConfigurationManager.getInstance().loadConfigurationFile("src/main/resources/http.json");
         Configuration configuration = ConfigurationManager.getInstance().getConfiuration();
 
         // creating an actual object
+        // configuration to webServer is injected by appServer
         try {
             webServer = new HttpServer(configuration.getAddress(), configuration.getPort());
         } catch (IOException e) {
-            System.out.println("For some reason couldn't established the server instance");
+            System.out.println("For some reason couldn't established the webServer instance");
         }
     }
 
@@ -86,10 +87,55 @@ public class AppServer {
         // for now we have "accept all policy"
         // the header to tell me about first time user is
         // Register : true
-        
+
+        String userID = request.headers.getOrDefault(KeyEnum.userID.key, null);
+        String nickname = request.headers.getOrDefault(KeyEnum.nickname.key, null);
+
+        if(userID != null && nickname != null) {
+
+        }
+
+        return true;
     }
 
     private boolean addApplicationHandler(Request request, Response response) {
         return false;
     }
+
+    public static void main(String[] args) {
+
+        /*
+        Entry point of web application
+         */
+
+        String address = "127.0.0.1";
+        int port = defaultPort;
+
+        if(args.length >=1) {
+            String[] tmp = args[0].split(":",2);
+            if(tmp.length == 2) {
+                try {
+                    int tmpPort = Integer.parseInt(tmp[1]);
+                    address = tmp[0];
+                    port = tmpPort;
+                } catch (Exception e) {
+                    System.out.println("Wrong ")
+                }
+            }
+        }
+        else {
+            // deafult configuration
+            System.out.println("[server] ip:port - start server with custom ip/port");
+            System.out.println("Example: 'java GameServer 192.168.0.1:2222'");
+            System.out.println(" ");
+        }
+
+        AppServer server;   // my instance of running server that handles applications
+        server = new AppServer();
+        server.start();
+        System.out.printf("Game server listening at %s\n\n", server.webServer.getAddress());
+
+        // TODO -- add timer
+    }
+
 }
