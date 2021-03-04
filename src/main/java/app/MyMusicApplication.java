@@ -7,6 +7,14 @@ public class MyMusicApplication {
     Server will have many objcets of this type running
      */
 
-    User user
+    private int timeSinceLastActivity;
+    private int amountOfConnectionsEstablished;
+    private int amountOfDataSaved;   // counts the amount of tracks saved
+
+    public MyMusicApplication() {
+        timeSinceLastActivity = 0;
+        amountOfConnectionsEstablished = 0;
+        amountOfDataSaved = 0;
+    }
 
 }

@@ -76,26 +76,42 @@ public class AppServer {
         webServer.stop();
     }
 
-    public String addApplication() {
+    public boolean addApplication(Request request) {
         // possibly to build MyMusicApplication object
         // TODO -- define which parameters will be passed to MyMusicApplication
-        return "";
-    }
-
-    private boolean authorize(Request request) {
-        // TODO -- build authorization mechanism
-        // for now we have "accept all policy"
-        // the header to tell me about first time user is
-        // Register : true
-
-        String userID = request.headers.getOrDefault(KeyEnum.userID.key, null);
-        String nickname = request.headers.getOrDefault(KeyEnum.nickname.key, null);
-
-        if(userID != null && nickname != null) {
-
+        if(!authorize(request)) {
+            return false;
         }
 
+        if(applicationList.containsKey(request.headers.getOrDefault(KeyEnum.userID.name, null))) {
+            return false;
+        }
+
+        MyMusicApplication application = new MyMusicApplication();
+        applicationList.put(request.headers.get(KeyEnum.userID.name), application);
         return true;
+    }
+
+    /***
+     * This function authorizes every http transaticon between server and client
+     * @param request is put into function and headers are scanned for appropriate data
+     * @return  true if successfull, otherwise false
+     */
+    private boolean authorize(Request request) {
+        // TODO -- build authorization mechanism - based on taking data from database
+
+        String userID = request.headers.getOrDefault(KeyEnum.userID.name, null);
+        String login = request.headers.getOrDefault(KeyEnum.login.name, null);
+
+        if(userID != null && login != null) {
+            if(users.containsKey(userID)) {             // is there such ID assigned to active user ?
+                if(users.get(userID).equals(login)) {   // is the ID -> login association correct ?
+                    return true;
+                }
+            }
+        }
+
+        return false;   // returns false if theree is no auth data or there is wrong association
     }
 
     private boolean addApplicationHandler(Request request, Response response) {
@@ -111,7 +127,7 @@ public class AppServer {
         String address = "127.0.0.1";
         int port = defaultPort;
 
-        if(args.length >=1) {
+        if(args.length >= 1) {
             String[] tmp = args[0].split(":",2);
             if(tmp.length == 2) {
                 try {
@@ -119,7 +135,7 @@ public class AppServer {
                     address = tmp[0];
                     port = tmpPort;
                 } catch (Exception e) {
-                    System.out.println("Wrong ")
+                    System.out.println("Wrong data provided");
                 }
             }
         }

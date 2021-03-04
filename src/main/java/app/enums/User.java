@@ -1,6 +1,8 @@
 package app.enums;
 
-public class User {
+import app.interfaces.ITextSerializable;
+
+public class User implements ITextSerializable {
 
     /*
     This class encapsulates data for user that is associated with login data
@@ -20,8 +22,18 @@ public class User {
     public String getDescription() { return this.description; }
 
     public String serialize() {
-        String output = "";
-        return output;
+        StringBuilder output = new StringBuilder();
+
+        output.append(name);
+        output.append(";");
+        output.append(login);
+        output.append(";");
+        output.append(avatar);
+        output.append(";");
+        output.append(description);
+        output.append(";");
+
+        return output.toString();
     }
 
 

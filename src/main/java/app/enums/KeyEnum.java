@@ -3,12 +3,12 @@ package app.enums;
 public enum KeyEnum {
 
     userID("userID"),
-    nickname("nickname");
+    login("login");
 
-    public final String key;
+    public final String name;
 
-    KeyEnum(String key) {
-        this.key = key;
+    KeyEnum(String name) {
+        this.name = name;
     }
 
 }
