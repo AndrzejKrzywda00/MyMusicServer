@@ -1,7 +1,6 @@
 package app;
 
 import app.enums.KeyEnum;
-import app.enums.User;
 import httpserver.HttpServer;
 import httpserver.Request;
 import httpserver.Response;
@@ -10,7 +9,6 @@ import httpserver.config.ConfigurationManager;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public class AppServer {
@@ -115,6 +113,67 @@ public class AppServer {
     }
 
     private boolean addApplicationHandler(Request request, Response response) {
+        return false;
+    }
+
+    /*
+    Handlers - the actual content of the application - the functions that repond to Requests
+     */
+
+    /***
+     * This handler handles login operation
+     * @param request contains login and password data
+     * @param response contains info if authorized successfully and UniqueID in such case
+     * @return true if no problems, false otherwise
+     */
+    private boolean loginHandler(Request request, Response response) {
+        // auhtorization here is not possible because by definition user is to be authorized yet
+        return false;
+    }
+
+
+    /***
+     * This handler retrieves data from db and passes a package to client
+     * @param request is a data request
+     * @param response is a data response
+     * @return true if successfull, false in other cases
+     */
+    private boolean getDataHandler(Request request, Response response) {
+        // data will be packed into lines of maximum of [maximumDataCapacity]
+        return false;
+    }
+
+    /***
+     * This handler removes runtime data when user logs out
+     * @param request informs about logout
+     * @param response informs about removing all unnecessary data
+     * @return true if successfull, false in other cases
+     */
+    private boolean logOutHandler(Request request, Response response) {
+        return false;
+    }
+
+    /***
+     * This handler handles track addition to database
+     * @param request contains data to be added to db tracks
+     * @param response informs whether operation has been successfull
+     * @return true is successfull, false otherwise
+     */
+    private boolean addTrackHandler(Request request, Response response) {
+        // accessing the database via special class
+        // checking if addition is at all possible
+        // adding
+        // information goes back
+        return false;
+    }
+
+    /***
+     * This handler handles playlist addition to database
+     * @param request contains data to be added to db playlists
+     * @param response informs whether operation has been successfull
+     * @return true if successfull, false otherwise
+     */
+    private boolean addPlaylistHandler(Request request, Response response) {
         return false;
     }
 

@@ -1,4 +1,4 @@
-package app.enums;
+package app;
 
 import app.interfaces.ITextSerializable;
 
