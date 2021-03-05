@@ -6,6 +6,7 @@ import httpserver.Request;
 import httpserver.Response;
 import httpserver.config.Configuration;
 import httpserver.config.ConfigurationManager;
+import httpserver.enums.Status;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -140,7 +141,13 @@ public class AppServer {
      */
     private boolean getDataHandler(Request request, Response response) {
         // data will be packed into lines of maximum of [maximumDataCapacity]
-        return false;
+        if(!authorize(request)) {
+            response.setStatus(Status.Unauthorized_401);
+            response.setBody("No userID provided or userID doesn't match provided login", Response.BodyType.Text);
+            return false;
+        }
+        return true;
+
     }
 
     /***
@@ -150,7 +157,12 @@ public class AppServer {
      * @return true if successfull, false in other cases
      */
     private boolean logOutHandler(Request request, Response response) {
-        return false;
+        if(!authorize(request)) {
+            response.setStatus(Status.Unauthorized_401);
+            response.setBody("No userID provided or userID doesn't match provided login", Response.BodyType.Text);
+            return false;
+        }
+        return true;
     }
 
     /***
@@ -164,7 +176,12 @@ public class AppServer {
         // checking if addition is at all possible
         // adding
         // information goes back
-        return false;
+        if(!authorize(request)) {
+            response.setStatus(Status.Unauthorized_401);
+            response.setBody("No userID provided or userID doesn't match provided login", Response.BodyType.Text);
+            return false;
+        }
+        return true;
     }
 
     /***
@@ -174,7 +191,12 @@ public class AppServer {
      * @return true if successfull, false otherwise
      */
     private boolean addPlaylistHandler(Request request, Response response) {
-        return false;
+        if(!authorize(request)) {
+            response.setStatus(Status.Unauthorized_401);
+            response.setBody("No userID provided or userID doesn't match provided login", Response.BodyType.Text);
+            return false;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
