@@ -103,7 +103,7 @@ public class AppServer {
         String userID = request.headers.getOrDefault(KeyEnum.userID.name, null);
         String login = request.headers.getOrDefault(KeyEnum.login.name, null);
 
-        if(userID != null && login != null) {
+        if(userID != null && login != null) {           // there is identyfication header at all
             if(users.containsKey(userID)) {             // is there such ID assigned to active user ?
                 if(users.get(userID).equals(login)) {   // is the ID -> login association correct ?
                     return true;
