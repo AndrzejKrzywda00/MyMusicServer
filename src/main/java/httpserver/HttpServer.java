@@ -250,6 +250,7 @@ public class HttpServer {
         Configuration configuration = ConfigurationManager.getInstance().getConfiuration();
 
         HttpServer server = null;
+
         // configuration will have to be passed quite different
         // beacuse HttpServer class will be administrated via AppServer instance
         try {
@@ -265,6 +266,9 @@ public class HttpServer {
            response.setBody("<h1>Ten serwer działa</h1>", Response.BodyType.HTML);
            return true;
         });
+
+        // here will i have to create and pass handlers for managment
+        // with different types of requests
 
         server.start();
     }

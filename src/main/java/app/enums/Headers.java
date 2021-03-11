@@ -1,13 +1,13 @@
 package app.enums;
 
-public enum KeyEnum {
+public enum Headers {
 
     userID("userID"),
     login("login");
 
     public final String name;
 
-    KeyEnum(String name) {
+    Headers(String name) {
         this.name = name;
     }
 

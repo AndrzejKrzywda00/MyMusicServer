@@ -1,6 +1,6 @@
 package app;
 
-import app.enums.KeyEnum;
+import app.enums.Headers;
 import httpserver.HttpServer;
 import httpserver.Request;
 import httpserver.Response;
@@ -82,12 +82,12 @@ public class AppServer {
             return false;
         }
 
-        if(applicationList.containsKey(request.headers.getOrDefault(KeyEnum.userID.name, null))) {
+        if(applicationList.containsKey(request.headers.getOrDefault(Headers.userID.name, null))) {
             return false;
         }
 
         MyMusicApplication application = new MyMusicApplication();
-        applicationList.put(request.headers.get(KeyEnum.userID.name), application);
+        applicationList.put(request.headers.get(Headers.userID.name), application);
         return true;
     }
 
@@ -99,8 +99,12 @@ public class AppServer {
     private boolean authorize(Request request) {
         // TODO -- build authorization mechanism - based on taking data from database
 
-        String userID = request.headers.getOrDefault(KeyEnum.userID.name, null);
-        String login = request.headers.getOrDefault(KeyEnum.login.name, null);
+        String userID = request.headers.getOrDefault(Headers.userID.name, null);
+        String login = request.headers.getOrDefault(Headers.login.name, null);
+
+        // so the structure of these two lines looks like this
+        // userID : IJAIJUIFJWUHD
+        // login : akrzywda
 
         if(userID != null && login != null) {           // there is identyfication header at all
             if(users.containsKey(userID)) {             // is there such ID assigned to active user ?
